@@ -1,0 +1,23 @@
+{
+  "name": "affiliate-storefront-production",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/api",
+    "apps/web"
+  ],
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "build": "npm run build -w @affiliate/api && npm run build -w @affiliate/web",
+    "start:api": "npm run start -w @affiliate/api",
+    "db:generate": "npm run prisma:generate -w @affiliate/api",
+    "db:deploy": "npm run prisma:deploy -w @affiliate/api",
+    "db:migrate": "npm run prisma:migrate -w @affiliate/api",
+    "db:seed": "npm run prisma:seed -w @affiliate/api",
+    "db:studio": "npm run prisma:studio -w @affiliate/api"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  }
+}

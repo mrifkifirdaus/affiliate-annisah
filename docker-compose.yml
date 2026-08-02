@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: affiliate_storefront_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: affiliate_storefront
+      POSTGRES_USER: affiliate
+      POSTGRES_PASSWORD: affiliate_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - affiliate_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U affiliate -d affiliate_storefront"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  affiliate_postgres_data:

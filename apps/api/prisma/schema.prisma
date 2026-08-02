@@ -1,0 +1,116 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+
+}
+
+enum UserRole {
+  ADMIN
+}
+
+enum Marketplace {
+  SHOPEE
+  TOKOPEDIA
+  TIKTOK
+  OTHER
+}
+
+enum ProductMediaType {
+  IMAGE
+  VIDEO
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  role         UserRole @default(ADMIN)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model StoreProfile {
+  id           String   @id @default(cuid())
+  key          String   @unique @default("main")
+  displayName  String
+  username     String   @unique
+  bio          String?
+  avatarUrl    String?
+  coverUrl     String?
+  instagramUrl String?
+  tiktokUrl    String?
+  whatsappUrl  String?
+  themeColor   String   @default("#7c3aed")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Category {
+  id        String    @id @default(cuid())
+  name      String
+  slug      String    @unique
+  sortOrder Int       @default(0)
+  isActive  Boolean   @default(true)
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Product {
+  id                 String         @id @default(cuid())
+  name               String
+  slug               String         @unique
+  description        String?
+  priceLabel         String?
+  originalPriceLabel String?
+  imageUrl           String?
+  affiliateUrl       String
+  marketplace        Marketplace
+  isActive           Boolean        @default(true)
+  isFeatured         Boolean        @default(false)
+  sortOrder          Int            @default(0)
+  clickCount         Int            @default(0)
+  categoryId         String?
+  category           Category?      @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  media              ProductMedia[]
+  clicks             ProductClick[]
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+
+  @@index([isActive, sortOrder])
+  @@index([marketplace])
+  @@index([categoryId])
+}
+
+model ProductMedia {
+  id           String           @id @default(cuid())
+  productId    String
+  product      Product          @relation(fields: [productId], references: [id], onDelete: Cascade)
+  type         ProductMediaType
+  url          String
+  thumbnailUrl String?
+  sortOrder    Int              @default(0)
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  @@index([productId, sortOrder])
+}
+
+model ProductClick {
+  id        String   @id @default(cuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  userAgent String?
+  referrer  String?
+  ipHash    String?
+  createdAt DateTime @default(now())
+
+  @@index([productId, createdAt])
+  @@index([createdAt])
+}
