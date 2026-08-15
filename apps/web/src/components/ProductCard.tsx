@@ -110,12 +110,16 @@ export function ProductCard({ product }: { product: Product }) {
       <div className="p-4">
         <p className="line-clamp-2 min-h-10 text-sm font-bold leading-5 text-slate-900">{product.name}</p>
         <div className="mt-3 flex items-end justify-between gap-2">
+
+          {/*}
           <div>
             <p className="text-sm font-extrabold text-violet-700">{product.priceLabel || 'Lihat harga'}</p>
             {product.originalPriceLabel && (
               <p className="text-xs text-slate-400 line-through">{product.originalPriceLabel}</p>
             )}
           </div>
+          */}
+          
           <a
             href={redirectUrl(product.slug)}
             target="_blank"

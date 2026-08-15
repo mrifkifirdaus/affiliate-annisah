@@ -89,7 +89,7 @@ export function StorefrontPage() {
 
   return (
     <div className="min-h-screen bg-[#f7f7fb] pb-16">
-      <div className="relative mx-auto min-h-screen max-w-3xl overflow-hidden bg-white shadow-2xl shadow-slate-200/60">
+      <div className="relative mx-auto min-h-screen max-w-3xl overflow-hidden bg-slate-300 shadow-2xl shadow-slate-200/60">
         <div
           className="relative h-48 overflow-hidden bg-gradient-to-br from-violet-700 via-fuchsia-600 to-amber-400 sm:h-56"
           style={profile?.coverUrl ? { backgroundImage: `url(${profile.coverUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}
@@ -149,7 +149,7 @@ export function StorefrontPage() {
           </div>
         </section>
 
-        <section className="sticky top-0 z-20 border-y border-slate-100 bg-white/95 px-5 py-4 backdrop-blur sm:px-8">
+        <section className="sticky top-0 z-20 border-y border-slate-300 bg-tranparent px-5 py-4 backdrop-blur sm:px-8">
           <div className="relative">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={19} />
             <input
